@@ -2,19 +2,19 @@ interface Task{
     create(): Task;
 }
 
-class ProjectTasks extends Task{
+class ProjectTasks implements Task{
     public create(): Task{
         return new ProjectTasks();
     }
 }
 
-class PersonalTasks extends Task{
+class PersonalTasks implements Task{
     public create(): Task{
         return new ProjectTasks();
     }
 }
 
-class UrgentTasks extends Task{
+class UrgentTasks implements Task{
     public create(): Task{
         return new ProjectTasks();
     }
