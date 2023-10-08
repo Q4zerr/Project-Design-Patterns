@@ -1,6 +1,6 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.taskManager = void 0;
+exports.taskManager = exports.TaskManager = void 0;
 class TaskManager {
     // Constructeur de gestionnaire de tâches
     constructor() {
@@ -16,6 +16,7 @@ class TaskManager {
         this.tasks.splice(indexDelete, 1);
     }
 }
+exports.TaskManager = TaskManager;
 class ProjectTasksManager {
     create() {
         return new ProjectTasksTask();
@@ -33,17 +34,17 @@ class UrgentTasksManager {
 }
 class ProjectTasksTask {
     run() {
-        return 'result of project tasks task';
+        return "result of project tasks task";
     }
 }
 class PersonalTasksTask {
     run() {
-        return 'result of personal tasks task';
+        return "result of personal tasks task";
     }
 }
 class UrgentTasksTask {
     run() {
-        return 'result of urgent tasks task';
+        return "result of urgent tasks task";
     }
 }
 // Singleton

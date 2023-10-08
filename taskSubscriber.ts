@@ -1,57 +1,50 @@
+import { taskManager } from "./taskmanager";
 // Observer
-class notifySubscriber{
-    // Attributs gestionnaire de tâches
-    tasks: Task[];
-
-    // Constructeur de gestionnaire de tâches
-    constructor(){
-        this.tasks = [];
-    }
-
-    // Méthode permettant d'ajouter une tâche dans le gestionnaire de tâches
-    addTask(Task: Task){
-        this.tasks.push(Task);
-    }
-
-    // Méthode permettant de cloturer une tâche dans le gestionnaire de tâches
-    closeTask(Task: Task){
-        let indexDelete = this.tasks.indexOf(Task);
-        this.tasks.splice(indexDelete, 1);
-    }
+export interface taskSubscriber {
+  sendNotify(taskManager): void;
 }
 
-// Observer
-// Manque récupération de la nouvelle tâche
-export interface taskSubscriber{
-    sendNotify(notify: string): void;
+class Sender {
+  taskSubscribers: taskSubscriber[];
+
+  constructor() {
+    this.taskSubscribers = [];
+  }
+
+  addTaskSubscriber(taskSubscriber: taskSubscriber) {
+    this.taskSubscribers.push(taskSubscriber);
+  }
+
+  getLatestTask(taskManager) {
+    const lastItem = taskManager.tasks.length - 1;
+    return taskManager.tasks[lastItem];
+  }
+
+  writeNotify(taskManager) {
+    this.taskSubscribers.forEach((taskSubscriber) => {
+      taskSubscriber.sendNotify(this.getLatestTask(taskManager));
+    });
+  }
 }
 
-class Sender{
-    taskSubscribers: taskSubscriber[];
+// Singleton
+export const taskSubscriberUnion = new Sender();
 
-    constructor(){
-        this.taskSubscribers = [];
-    }
+class unionTaskSubscriber implements taskSubscriber {
+  fnameSubscriber: string;
 
-    addTaskSubscriber(taskSubscriber: taskSubscriber){
-        this.taskSubscribers.push(taskSubscriber);
-    }
+  constructor(fnameSubscriber: string) {
+    this.fnameSubscriber = fnameSubscriber;
+  }
 
-    writeNotify(notify: string){
-        this.taskSubscribers.forEach((taskSubscriber) =>{
-            taskSubscriber.sendNotify(notify);
-        });
-    }
+  sendNotify(latestTask: string): void {
+    console.log(`${this.fnameSubscriber} découvrez ${latestTask}`);
+  }
 }
 
-class unionTaskSubscriber implements taskSubscriber{
-    fnameSubscriber: string;
+const sender = new Sender();
 
-    constructor(fnameSubscriber: string){
-        this.fnameSubscriber = fnameSubscriber;
-    }
+sender.addTaskSubscriber(new unionTaskSubscriber("Jean Paul"));
+sender.addTaskSubscriber(new unionTaskSubscriber("Jean Claude"));
 
-    sendNotify(notify: string): void {
-        console.log(`${this.fnameSubscriber} découvrez ${notify}`);
-    }
-}
+sender.writeNotify(taskManager);

@@ -1,15 +1,18 @@
-class ProjectTasks extends Task {
+class ProjectTasks {
     create() {
+        console.log("Tache créer");
         return new ProjectTasks();
     }
 }
-class PersonalTasks extends Task {
+class PersonalTasks {
     create() {
+        console.log("Tache créer");
         return new ProjectTasks();
     }
 }
-class UrgentTasks extends Task {
+class UrgentTasks {
     create() {
+        console.log("Tache créer");
         return new ProjectTasks();
     }
 }
