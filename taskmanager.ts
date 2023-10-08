@@ -24,41 +24,41 @@ interface taskFactory {
   create(): Task;
 }
 
-interface Task {
+export interface Task {
   run(): string;
 }
 
-class ProjectTasksManager implements taskFactory {
+export class ProjectTasksManager implements taskFactory {
   public create(): Task {
     return new ProjectTasksTask();
   }
 }
 
-class PersonalTasksManager implements taskFactory {
+export class PersonalTasksManager implements taskFactory {
   public create(): Task {
     return new PersonalTasksTask();
   }
 }
 
-class UrgentTasksManager implements taskFactory {
+export class UrgentTasksManager implements taskFactory {
   public create(): Task {
     return new UrgentTasksTask();
   }
 }
 
-class ProjectTasksTask implements Task {
+export class ProjectTasksTask implements Task {
   public run(): string {
     return "result of project tasks task";
   }
 }
 
-class PersonalTasksTask implements Task {
+export class PersonalTasksTask implements Task {
   public run(): string {
     return "result of personal tasks task";
   }
 }
 
-class UrgentTasksTask implements Task {
+export class UrgentTasksTask implements Task {
   public run(): string {
     return "result of urgent tasks task";
   }
